@@ -1,0 +1,8 @@
+{
+  "name": "Remix IT SUPPORT HELP DESK - Paramount Textile Mills",
+  "description": "Internal IT \u0026 SAP Support Help Desk application for Paramount Textile Mills (P) Ltd, featuring ticket management, role-based access, support team assignments, reports, and real-time updates.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

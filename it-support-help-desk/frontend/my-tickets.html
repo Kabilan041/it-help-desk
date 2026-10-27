@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Tickets - IT SUPPORT HELP DESK | Paramount Textile Mills (P) Ltd</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">PTM</div>
+        <div>
+          <div class="brand-title">PARAMOUNT TEXTILES</div>
+          <div class="brand-subtitle">IT & SAP Help Desk</div>
+        </div>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li>
+          <a href="dashboard.html" class="nav-link">
+            <span class="nav-icon">📊</span> Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="raise-ticket.html" class="nav-link">
+            <span class="nav-icon">➕</span> Raise Ticket
+          </a>
+        </li>
+        <li>
+          <a href="my-tickets.html" class="nav-link active">
+            <span class="nav-icon">📋</span> My Tickets
+          </a>
+        </li>
+        <li class="support-admin-only">
+          <a href="admin.html" class="nav-link">
+            <span class="nav-icon">⚙️</span> Admin & Support Panel
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-snippet">
+          <div class="user-avatar" id="user-avatar">PT</div>
+          <div class="user-details">
+            <div class="user-name" id="user-full-name">Loading...</div>
+            <span class="user-role-badge" id="user-role-badge">...</span>
+          </div>
+        </div>
+        <div id="user-dept-text" style="font-size: 11px; color: #94a3b8; margin-bottom: 8px;"></div>
+        <button type="button" class="btn-logout" onclick="auth.logout()">Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <main class="main-area">
+      <header class="top-header">
+        <div class="page-title-group">
+          <h1>My Service Tickets</h1>
+          <p>Monitor progress, updates and troubleshooting notes on your raised requests</p>
+        </div>
+        <div class="header-actions">
+          <button type="button" id="btn-download-csv" class="btn btn-secondary" title="Export tickets to CSV">
+            <span>📥</span> Download CSV
+          </button>
+          <a href="raise-ticket.html" class="btn btn-primary">+ Raise New Ticket</a>
+        </div>
+      </header>
+
+      <div class="content-body">
+        <!-- FILTER BAR -->
+        <div class="card" style="margin-bottom: 20px;">
+          <div class="card-body" style="padding: 16px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; align-items: flex-end;">
+              <div>
+                <label for="filter-search" style="font-size: 12px;">Search Keyword</label>
+                <input type="text" id="filter-search" placeholder="Ticket # or title...">
+              </div>
+              <div>
+                <label for="filter-status" style="font-size: 12px;">Status</label>
+                <select id="filter-status">
+                  <option value="All">All Statuses</option>
+                  <option value="Open">Open</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Resolved">Resolved</option>
+                  <option value="Closed">Closed</option>
+                </select>
+              </div>
+              <div>
+                <label for="filter-priority" style="font-size: 12px;">Priority</label>
+                <select id="filter-priority">
+                  <option value="All">All Priorities</option>
+                  <option value="Critical">Critical</option>
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+                </select>
+              </div>
+              <div>
+                <label for="filter-date-from" style="font-size: 12px;">Date From</label>
+                <input type="date" id="filter-date-from">
+              </div>
+              <div>
+                <label for="filter-date-to" style="font-size: 12px;">Date To</label>
+                <input type="date" id="filter-date-to">
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button type="button" id="btn-apply-filter" class="btn btn-primary btn-sm" style="flex: 1; height: 38px;">Apply</button>
+                <button type="button" id="btn-reset-filter" class="btn btn-secondary btn-sm" style="height: 38px;">Reset</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TICKETS TABLE -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Submitted Tickets (<span id="ticket-count-badge">0</span>)</span>
+            <span id="sync-status-text" style="font-size: 12px; color: var(--text-muted);">Syncing with PostgreSQL...</span>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Ticket Number</th>
+                    <th>Issue Title</th>
+                    <th>Department</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>Created Date</th>
+                    <th>Assigned Support Person</th>
+                    <th>Current Status</th>
+                    <th>Last Updated</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="my-tickets-tbody">
+                  <tr><td colspan="10" style="text-align: center; color: #94a3b8; padding: 24px;">Loading your tickets...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/my-tickets.js"></script>
+</body>
+</html>

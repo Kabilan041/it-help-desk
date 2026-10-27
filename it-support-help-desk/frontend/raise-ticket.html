@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raise a Ticket - IT SUPPORT HELP DESK | Paramount Textile Mills (P) Ltd</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">PTM</div>
+        <div>
+          <div class="brand-title">PARAMOUNT TEXTILES</div>
+          <div class="brand-subtitle">IT & SAP Help Desk</div>
+        </div>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li>
+          <a href="dashboard.html" class="nav-link">
+            <span class="nav-icon">📊</span> Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="raise-ticket.html" class="nav-link active">
+            <span class="nav-icon">➕</span> Raise Ticket
+          </a>
+        </li>
+        <li>
+          <a href="my-tickets.html" class="nav-link">
+            <span class="nav-icon">📋</span> My Tickets
+          </a>
+        </li>
+        <li class="support-admin-only">
+          <a href="admin.html" class="nav-link">
+            <span class="nav-icon">⚙️</span> Admin & Support Panel
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-snippet">
+          <div class="user-avatar" id="user-avatar">PT</div>
+          <div class="user-details">
+            <div class="user-name" id="user-full-name">Loading...</div>
+            <span class="user-role-badge" id="user-role-badge">...</span>
+          </div>
+        </div>
+        <div id="user-dept-text" style="font-size: 11px; color: #94a3b8; margin-bottom: 8px;"></div>
+        <button type="button" class="btn-logout" onclick="auth.logout()">Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <main class="main-area">
+      <header class="top-header">
+        <div class="page-title-group">
+          <h1>Raise New Service Ticket</h1>
+          <p>Submit IT hardware/network issues or SAP ERP business process assistance requests</p>
+        </div>
+        <div class="header-actions">
+          <a href="my-tickets.html" class="btn btn-secondary">Cancel & Return</a>
+        </div>
+      </header>
+
+      <div class="content-body">
+        <div class="card" style="max-width: 900px; margin: 0 auto;">
+          <div class="card-header">
+            <span class="card-title">Ticket Information Form</span>
+            <span style="font-size: 12px; color: var(--text-muted);">* All starred fields are required</span>
+          </div>
+
+          <div class="card-body">
+            <div id="form-alert" class="alert" style="display: none;"></div>
+
+            <form id="raise-ticket-form">
+              <div class="form-grid">
+                <!-- System Generated Info -->
+                <div class="form-group">
+                  <label for="ticket-number-preview">Ticket Reference Number</label>
+                  <input type="text" id="ticket-number-preview" value="Auto-generated on submission" readonly style="font-family: monospace; font-weight: 600; color: #2563eb;">
+                </div>
+
+                <div class="form-group">
+                  <label for="reported-time">Date & Time Reported</label>
+                  <input type="text" id="reported-time" readonly>
+                </div>
+
+                <!-- Employee Info (Auto populated) -->
+                <div class="form-group">
+                  <label for="employee-name">Employee Name</label>
+                  <input type="text" id="employee-name" readonly>
+                </div>
+
+                <div class="form-group">
+                  <label for="employee-id">Employee ID</label>
+                  <input type="text" id="employee-id" readonly style="font-family: monospace;">
+                </div>
+
+                <!-- Department (Searchable/Selectable with 13 departments) -->
+                <div class="form-group">
+                  <label for="department-select">Mill Department <span class="required-star">*</span></label>
+                  <select id="department-select" required>
+                    <option value="">-- Select Department --</option>
+                    <option value="1">Store</option>
+                    <option value="2">Weaving</option>
+                    <option value="3">Sizing</option>
+                    <option value="4">Electrical</option>
+                    <option value="5">Marketing</option>
+                    <option value="6">Madeups-1</option>
+                    <option value="7">Madeups-2</option>
+                    <option value="8">HRD</option>
+                    <option value="9">Accounts</option>
+                    <option value="10">Export</option>
+                    <option value="11">Gate</option>
+                    <option value="12">Sample</option>
+                    <option value="13">PD</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-extension">Contact Number / Intercom Ext <span class="required-star">*</span></label>
+                  <input type="text" id="contact-extension" placeholder="e.g. Ext 201 or Mobile" required>
+                </div>
+
+                <!-- Division and Category -->
+                <div class="form-group">
+                  <label for="category-division-select">Support Division <span class="required-star">*</span></label>
+                  <select id="category-division-select" required>
+                    <option value="SAP Support">SAP Support (ERP / Functional / MDM)</option>
+                    <option value="IT Support">IT Support (Hardware / Network / Systems)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="category-select">Issue Category <span class="required-star">*</span></label>
+                  <select id="category-select" required>
+                    <option value="">-- Select Category --</option>
+                  </select>
+                </div>
+
+                <!-- Priority -->
+                <div class="form-group">
+                  <label for="priority-select">Priority Level <span class="required-star">*</span></label>
+                  <select id="priority-select" required>
+                    <option value="Medium">Medium (Normal workflow, 24-48 hrs)</option>
+                    <option value="Low">Low (General inquiry, non-blocking)</option>
+                    <option value="High">High (Major process disruption, < 12 hrs)</option>
+                    <option value="Critical">Critical (Mill line halt, Gate/Production blocked, < 4 hrs)</option>
+                  </select>
+                </div>
+
+                <!-- Short Title -->
+                <div class="form-group full-width">
+                  <label for="issue-title">Issue Title (Short Summary) <span class="required-star">*</span></label>
+                  <input type="text" id="issue-title" placeholder="Brief summary of the issue (e.g. Zebra barcode printer ribbon error at Yarn Store)" required maxlength="200">
+                </div>
+
+                <!-- Detailed Description -->
+                <div class="form-group full-width">
+                  <label for="issue-description">Detailed Description <span class="required-star">*</span></label>
+                  <textarea id="issue-description" rows="5" placeholder="Explain the symptoms, error messages shown on screen, transaction codes (T-Codes like MIGO, ME21N if SAP), and exact location..." required></textarea>
+                </div>
+
+                <!-- File Attachment -->
+                <div class="form-group full-width">
+                  <label for="ticket-attachment">File Attachment (Screenshot, PDF, Log file - Max 10MB)</label>
+                  <input type="file" id="ticket-attachment" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.txt,.log">
+                  <small style="color: #64748b; font-size: 11px;">Supported formats: PNG, JPG, PDF, DOCX, XLSX, TXT.</small>
+                </div>
+              </div>
+
+              <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 12px;">
+                <a href="my-tickets.html" class="btn btn-secondary">Cancel</a>
+                <button type="submit" id="btn-submit-ticket" class="btn btn-primary" style="padding-left: 24px; padding-right: 24px;">
+                  Submit Support Ticket
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/raise-ticket.js"></script>
+</body>
+</html>

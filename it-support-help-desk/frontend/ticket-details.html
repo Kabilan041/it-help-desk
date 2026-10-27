@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket Details - IT SUPPORT HELP DESK | Paramount Textile Mills (P) Ltd</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">PTM</div>
+        <div>
+          <div class="brand-title">PARAMOUNT TEXTILES</div>
+          <div class="brand-subtitle">IT & SAP Help Desk</div>
+        </div>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li>
+          <a href="dashboard.html" class="nav-link">
+            <span class="nav-icon">📊</span> Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="raise-ticket.html" class="nav-link">
+            <span class="nav-icon">➕</span> Raise Ticket
+          </a>
+        </li>
+        <li>
+          <a href="my-tickets.html" class="nav-link active">
+            <span class="nav-icon">📋</span> My Tickets
+          </a>
+        </li>
+        <li class="support-admin-only">
+          <a href="admin.html" class="nav-link">
+            <span class="nav-icon">⚙️</span> Admin & Support Panel
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-snippet">
+          <div class="user-avatar" id="user-avatar">PT</div>
+          <div class="user-details">
+            <div class="user-name" id="user-full-name">Loading...</div>
+            <span class="user-role-badge" id="user-role-badge">...</span>
+          </div>
+        </div>
+        <div id="user-dept-text" style="font-size: 11px; color: #94a3b8; margin-bottom: 8px;"></div>
+        <button type="button" class="btn-logout" onclick="auth.logout()">Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <main class="main-area">
+      <header class="top-header">
+        <div class="page-title-group">
+          <h1>Ticket Details & Lifecycle</h1>
+          <p id="header-ticket-crumb">Viewing Ticket Details</p>
+        </div>
+        <div class="header-actions">
+          <button type="button" class="btn btn-secondary" onclick="window.print()">🖨️ Print Ticket</button>
+          <a href="my-tickets.html" class="btn btn-secondary">← Back to List</a>
+        </div>
+      </header>
+
+      <div class="content-body">
+        <div id="details-alert" class="alert" style="display: none;"></div>
+
+        <!-- MAIN TICKET HEADER CARD -->
+        <div class="card" style="margin-bottom: 24px;">
+          <div class="card-header" style="background-color: #f8fafc;">
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <span id="badge-ticket-num" style="font-family: monospace; font-size: 16px; font-weight: 700; color: var(--primary-700);">...</span>
+              <span id="badge-ticket-status" class="badge">Loading Status</span>
+              <span id="badge-ticket-priority" class="priority-badge">...</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted);" id="ticket-reported-on">Reported: ...</div>
+          </div>
+
+          <div class="card-body">
+            <h2 id="ticket-title-display" style="font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 16px;">Loading title...</h2>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; padding: 14px; background: #f8fafc; border-radius: 6px; margin-bottom: 20px; border: 1px solid #e2e8f0; font-size: 13px;">
+              <div>
+                <span style="color: #64748b; font-size: 11.5px; display: block;">Reported By</span>
+                <strong id="display-creator-name">...</strong> <span id="display-creator-empid" style="color: #64748b;">()</span>
+              </div>
+              <div>
+                <span style="color: #64748b; font-size: 11.5px; display: block;">Department</span>
+                <strong id="display-department">...</strong>
+              </div>
+              <div>
+                <span style="color: #64748b; font-size: 11.5px; display: block;">Contact / Extension</span>
+                <strong id="display-contact">...</strong>
+              </div>
+              <div>
+                <span style="color: #64748b; font-size: 11.5px; display: block;">Category</span>
+                <strong id="display-category">...</strong>
+              </div>
+              <div>
+                <span style="color: #64748b; font-size: 11.5px; display: block;">Assigned Support Engineer</span>
+                <strong id="display-assigned-to" style="color: #1e40af;">...</strong>
+              </div>
+              <div>
+                <span style="color: #64748b; font-size: 11.5px; display: block;">SLA Due Date</span>
+                <strong id="display-due-date">...</strong>
+              </div>
+            </div>
+
+            <!-- Full Issue Description -->
+            <div style="margin-bottom: 20px;">
+              <h3 style="font-size: 13.5px; font-weight: 600; color: #334155; margin-bottom: 8px;">Full Issue Description:</h3>
+              <div id="display-description" style="white-space: pre-wrap; background: #ffffff; padding: 16px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 13.5px; line-height: 1.6; color: #1e293b;">
+                Loading description...
+              </div>
+            </div>
+
+            <!-- Resolution Notes Box (Visible if present or resolved) -->
+            <div id="resolution-section" style="display: none; margin-bottom: 20px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 16px;">
+              <h3 style="font-size: 13px; font-weight: 700; color: #166534; margin-bottom: 6px;">✓ Resolution Details:</h3>
+              <div id="display-resolution-notes" style="font-size: 13px; color: #14532d; white-space: pre-wrap;"></div>
+              <div id="display-resolved-at" style="font-size: 11px; color: #15803d; margin-top: 6px;"></div>
+            </div>
+
+            <!-- Attachments Section -->
+            <div style="margin-bottom: 10px;">
+              <h3 style="font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 8px;">Attachments:</h3>
+              <div id="attachments-container" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <p style="color: #94a3b8; font-size: 12px;">No file attachments uploaded for this ticket.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WORKFLOW ACTIONS & TIMELINE GRID -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          <!-- LEFT: COMMENTS & TROUBLESHOOTING NOTES -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Comments & Troubleshooting Notes</span>
+              <span id="comments-count" style="font-size: 12px; color: var(--text-muted);">0 Notes</span>
+            </div>
+            <div class="card-body">
+              <div id="comments-list" style="display: flex; flex-direction: column; gap: 10px; max-height: 400px; overflow-y: auto; margin-bottom: 18px;">
+                <p style="color: #94a3b8; font-size: 12px;">No comments posted yet.</p>
+              </div>
+
+              <!-- Add Comment Box -->
+              <form id="comment-form">
+                <div class="form-group" style="margin-bottom: 10px;">
+                  <label for="new-comment-text" style="font-size: 12px;">Add Update or Note:</label>
+                  <textarea id="new-comment-text" rows="3" placeholder="Type clarification, troubleshooting update or response..." required></textarea>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <label id="internal-note-label" style="display: none; align-items: center; gap: 6px; font-size: 12px; color: #b45309; cursor: pointer;">
+                    <input type="checkbox" id="check-internal-note"> Mark as Internal IT Note (hidden from employee)
+                  </label>
+                  <button type="submit" id="btn-post-comment" class="btn btn-primary btn-sm" style="margin-left: auto;">
+                    Post Update
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- RIGHT: STATUS LIFECYCLE & AUDIT HISTORY -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Status Transition & Lifecycle History</span>
+            </div>
+            <div class="card-body">
+              <!-- WORKFLOW ACTION BOX -->
+              <div id="status-controls-box" style="padding: 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 20px;">
+                <h4 style="font-size: 12.5px; font-weight: 700; color: #334155; margin-bottom: 8px;">Update Ticket Status:</h4>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;">
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="promptStatusChange('In Progress')">Mark In Progress</button>
+                  <button type="button" class="btn btn-success btn-sm" onclick="promptStatusChange('Resolved')">Mark Resolved</button>
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="promptStatusChange('Closed')">Confirm Closure</button>
+                  <button type="button" class="btn btn-danger btn-sm" onclick="promptStatusChange('Open')">Reopen Ticket</button>
+                </div>
+                <div id="status-reason-container" style="display: none; margin-top: 10px;">
+                  <label for="status-note-input" id="status-note-label" style="font-size: 12px; font-weight: 600;">Resolution Notes / Reason:</label>
+                  <textarea id="status-note-input" rows="2" placeholder="Describe root cause and fix applied..."></textarea>
+                  <div style="margin-top: 8px; display: flex; gap: 6px;">
+                    <button type="button" id="btn-confirm-status" class="btn btn-primary btn-sm">Confirm Status Update</button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="cancelStatusChange()">Cancel</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ASSIGNMENT BOX (Support/Admin only) -->
+              <div id="assignment-controls-box" class="support-admin-only" style="padding: 14px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; margin-bottom: 20px;">
+                <h4 style="font-size: 12.5px; font-weight: 700; color: #1e40af; margin-bottom: 8px;">Reassign Support Person:</h4>
+                <div style="display: flex; gap: 8px;">
+                  <select id="assign-support-select" style="font-size: 12px; padding: 6px;">
+                    <option value="">Select Support Lead</option>
+                  </select>
+                  <button type="button" id="btn-reassign" class="btn btn-primary btn-sm">Assign</button>
+                </div>
+              </div>
+
+              <!-- TIMELINE HISTORY -->
+              <h4 style="font-size: 12.5px; font-weight: 700; color: #334155; margin-bottom: 12px;">Audit History Trail:</h4>
+              <div class="timeline" id="status-timeline">
+                <p style="color: #94a3b8; font-size: 12px;">Loading history trail...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ticket-details.js"></script>
+</body>
+</html>

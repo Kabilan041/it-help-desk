@@ -1,0 +1,19 @@
+# Dependency directories
+node_modules/
+
+# Environment files
+.env
+.env.local
+
+# Uploads directory contents (preserve directory with .gitkeep)
+uploads/*
+!uploads/.gitkeep
+
+# Operating System files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Log files
+*.log
+npm-debug.log*
